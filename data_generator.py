@@ -16,7 +16,7 @@ def show_mask(pixels):
         pix = np.array(pixels.split(' ')).reshape(-1, 2).astype('int')
         for pix_id, run in pix:
             flat_mask[pix_id:pix_id + run] = 1
-    return flat_mask.reshape(img.shape[:2], order='F')
+    return flat_mask.reshape(reference_img.shape[:2], order='F')
 
 def id_to_mask(img_id):
     'given an image id return a 4 channel mask, one channel per class'
