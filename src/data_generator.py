@@ -3,7 +3,7 @@ import matplotlib.image as mpimg
 import numpy as np
 import pandas as pd
 import keras
-from image_utils import id_to_mask
+from src.image_utils import id_to_mask
 
 img_id = '0002cc93b.jpg'
 reference_img = mpimg.imread(f'data/train/{img_id}')

@@ -1,4 +1,4 @@
-from image_utils import id_to_mask
+from src.image_utils import id_to_mask
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 

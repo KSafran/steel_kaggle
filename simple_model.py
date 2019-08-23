@@ -8,8 +8,8 @@ import pandas as pd
 from keras import models, layers
 from keras import backend as K
 from keras.callbacks import ModelCheckpoint
-from data_generator import DataGenerator
-from image_utils import get_ids
+from src.data_generator import DataGenerator
+from src.image_utils import get_ids
 
 def dice_coef(y_true, y_pred, smooth=1):
     y_true_f = K.flatten(y_true)
