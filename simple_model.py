@@ -9,7 +9,7 @@ from keras import models, layers
 from keras import backend as K
 from keras.callbacks import ModelCheckpoint
 from data_generator import DataGenerator
-
+from image_utils import get_ids
 
 def dice_coef(y_true, y_pred, smooth=1):
     y_true_f = K.flatten(y_true)
@@ -47,22 +47,14 @@ model.compile(optimizer='rmsprop',
     metrics=[dice_coef])
 
 train_data = pd.read_csv('data/train.csv')
-
-def extract_imageid(imageid_classid):
-    return imageid_classid.split('_')[0]
-
-def get_ids(train_data):
-    '''extract image ids from train.csv data'''
-    return train_data['ImageId_ClassId'].apply(extract_imageid)
-
 image_ids = get_ids(train_data)
 
 train_gen = DataGenerator(
-    image_ids[:100].tolist(),
+    image_ids[:100],
     batch_size=10)
 
 valid_gen = DataGenerator(
-    image_ids[100:200].tolist(),
+    image_ids[100:200],
     batch_size=10,
     shuffle=True)
 
@@ -79,6 +71,6 @@ history = model.fit_generator(
     train_gen,
     validation_data=valid_gen,
     callbacks = [checkpoint],
-    epochs = 7)
+    epochs = 1)
 
 
