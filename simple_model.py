@@ -17,7 +17,7 @@ def dice_coef(y_true, y_pred, smooth=1):
     intersection = K.sum(y_true_f * y_pred_f)
     return (2. * intersection + smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + smooth)
 
-inputs = models.Input((256, 1600, 3))
+inputs = models.Input((256, 1600, 1))
 c1 = layers.Conv2D(16, (3, 3), activation='elu', padding='same')(inputs)
 c1 = layers.Conv2D(16, (3, 3), activation='elu', padding='same')(c1)
 m1 = layers.MaxPooling2D((2, 2))(c1)

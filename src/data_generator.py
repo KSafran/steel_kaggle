@@ -1,12 +1,13 @@
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
+import cv2
 import numpy as np
 import pandas as pd
 import keras
 from src.image_utils import id_to_mask
 
 img_id = '0002cc93b.jpg'
-reference_img = mpimg.imread(f'data/train/{img_id}')
+reference_img = cv2.imread(f'data/train/{img_id}', cv2.IMREAD_GRAYSCALE)
+reference_img = np.expand_dims(reference_img, axis=-1)
 train_data = pd.read_csv('data/train.csv')
 
 class DataGenerator(keras.utils.Sequence):
@@ -41,7 +42,9 @@ class DataGenerator(keras.utils.Sequence):
         inputs = np.zeros((self.batch_size, reference_img.shape[0], reference_img.shape[1], reference_img.shape[2]))
         outputs = np.zeros((self.batch_size, reference_img.shape[0], reference_img.shape[1], 4))
         for i, image_id  in enumerate(image_ids_temp):
-            inputs[i, :, :, :] = mpimg.imread(f'data/train/{image_id}') / 256
+            img = cv2.imread(f'data/train/{image_id}', cv2.IMREAD_GRAYSCALE)
+            img = np.expand_dims(img, axis=-1).astype(np.float32) / 255.
+            inputs[i, :, :, :] = img
             outputs[i, :, :, :] = id_to_mask(image_id)
         return inputs, outputs
 
