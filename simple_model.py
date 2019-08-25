@@ -50,12 +50,12 @@ train_data = pd.read_csv('data/train.csv')
 image_ids = get_ids(train_data)
 
 train_gen = DataGenerator(
-    image_ids[:100],
-    batch_size=10)
+    image_ids[:1000],
+    batch_size=20)
 
 valid_gen = DataGenerator(
-    image_ids[100:200],
-    batch_size=10,
+    image_ids[1000:2000],
+    batch_size=20,
     shuffle=True)
 
 checkpoint = ModelCheckpoint(
@@ -71,6 +71,6 @@ history = model.fit_generator(
     train_gen,
     validation_data=valid_gen,
     callbacks = [checkpoint],
-    epochs = 1)
+    epochs = 10)
 
 
