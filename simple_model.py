@@ -62,10 +62,12 @@ np.random.seed(10)
 np.random.shuffle(image_ids)
 
 train_gen = DataGenerator(
+    'train',
     image_ids[:40000],
     batch_size=10)
 
 valid_gen = DataGenerator(
+    'train',
     image_ids[40000:],
     batch_size=10,
     shuffle=True)

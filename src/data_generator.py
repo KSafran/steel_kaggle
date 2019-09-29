@@ -11,7 +11,8 @@ reference_img = np.expand_dims(reference_img, axis=-1)
 train_data = pd.read_csv('data/train.csv')
 
 class DataGenerator(keras.utils.Sequence):
-    def __init__(self, image_ids, batch_size, shuffle=True):
+    def __init__(self, image_folder, image_ids, batch_size, shuffle=True):
+        self.image_folder = image_folder
         self.image_ids = image_ids
         self.batch_size = batch_size
         self.shuffle = shuffle
@@ -42,7 +43,7 @@ class DataGenerator(keras.utils.Sequence):
         inputs = np.zeros((self.batch_size, reference_img.shape[0], reference_img.shape[1], reference_img.shape[2]))
         outputs = np.zeros((self.batch_size, reference_img.shape[0], reference_img.shape[1], 4))
         for i, image_id  in enumerate(image_ids_temp):
-            img = cv2.imread(f'data/train/{image_id}', cv2.IMREAD_GRAYSCALE)
+            img = cv2.imread(f'data/{self.image_folder}/{image_id}', cv2.IMREAD_GRAYSCALE)
             img = np.expand_dims(img, axis=-1).astype(np.float32) / 255.
             inputs[i, :, :, :] = img
             outputs[i, :, :, :] = id_to_mask(image_id)
